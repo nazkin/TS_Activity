@@ -1,0 +1,19 @@
+.header-nav {
+    background: rgb(14, 13, 24);
+    color: linen !important;
+    font-size: 18px;
+}
+.nav-brand-span {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding:5px;
+    background-color:#3535ff8a;
+}
+.navbar-brand{
+    color: linen !important;
+    font-size: 20px !important;
+    font-style: italic !important;
+    font-family: "Varela Round, sans serif";
+}
