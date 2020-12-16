@@ -10,7 +10,7 @@ Phase 1
 [X]    - Present 1 random drink recipe on the side
 
 Phase 2
-[ ]-- Set up the routing to display specific drink information
+[X]-- Set up the routing to display specific drink information
 [ ]-- Also set up a search page
 
 Phase 3

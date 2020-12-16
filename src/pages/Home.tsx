@@ -4,6 +4,7 @@ import axios from "axios";
 
 import * as urls from "../api/endpoints";
 import * as interfaces from "../models/interfaces";
+import { destructureCocktailIngredients } from '../helpers';
 
 import Hero from "../components/HomeHero";
 import Template from "../components/Template";
@@ -19,10 +20,13 @@ const Home: React.FC<homeProps> = (props) => {
       description: "",
     }]);
     const [recommend, setRecommend] = useState<interfaces.drinkList>({
-      id: "",
+      id:"",
       name: "",
       img: "",
       description: "",
+      ingredients: [],
+      ingredientAmounts: [],
+      instructions: "",
     });
 
     //Fetching 10 random cockatails for the home page
@@ -63,42 +67,16 @@ const Home: React.FC<homeProps> = (props) => {
       }).then(res => {
         console.log(res.data);
         const recommendedDrink = res.data.drinks[0];
-        const ingArr:Array<string> = [];
-        const amountArr:Array<string> = [];
-
-        for(let i:number = 0; i < 15; i++) {
-          let ithIngredient= `strIngredient${i+1}`;
-          let ithAmount = `strMeasure${i+1}`;
-
-          if(recommendedDrink[ithIngredient] !== null) {
-            ingArr.push(recommendedDrink[ithIngredient])
-          }
-
-          if(!recommendedDrink[ithAmount] && recommendedDrink[ithIngredient]){
-            amountArr.push("to your taste");
-          }else if(recommendedDrink[ithAmount] && recommendedDrink[ithIngredient]){
-            amountArr.push(recommendedDrink[ithAmount]);
-          }
- 
-        }
-
-        let obj: interfaces.drinkList = {
-          id: recommendedDrink.idDrink,
-          name: recommendedDrink.strDrink,
-          img: recommendedDrink.strDrinkThumb,
-          description: recommendedDrink.strAlcoholic + " " + recommendedDrink.strCategory,
-          ingredients: ingArr,
-          ingredientAmounts: amountArr,
-        };
-        //Filtering for ingredients
-        setRecommend(obj);
+        const drinkData = destructureCocktailIngredients(recommendedDrink);
+        setRecommend(drinkData);
       }).catch(err => console.log(err));
     },[setRecommend]);
 
-
+    let heroUi = recommend === undefined || drinks === undefined ? (<div/>) : (<Hero recommended={recommend} drinkList={drinks}/>)
+    
     return (
         <Template>
-            <Hero recommended={recommend} drinkList={drinks}/>
+            {heroUi}
         </Template>
     );
 }

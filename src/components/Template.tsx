@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./Header";
-import { withRouter } from "react-router-dom"
+import { withRouter } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
 export interface ITemplateProps {

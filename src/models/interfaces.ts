@@ -5,5 +5,6 @@ export interface drinkList {
     img: string;
     description?: string;
     ingredients?: Array<string>;
-    ingredientAmounts?: Array<string>
+    ingredientAmounts?: Array<string>;
+    instructions?: string;
   };

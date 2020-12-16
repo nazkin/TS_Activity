@@ -1,5 +1,5 @@
 import React from "react";
-import { Carousel, Row, Col, Button } from "react-bootstrap";
+import { Carousel, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom"
 import * as interfaces from "../models/interfaces";
 import "./comp_styles/homeHero.css";
@@ -9,21 +9,18 @@ export interface IHeroProps {
     drinkList: Array<interfaces.drinkList>;
     recommended: interfaces.drinkList;
 }
+type strOrUndefined = string | undefined;
 
 const Hero: React.FC<IHeroProps> = ({ drinkList, recommended }) => {
     let history = useHistory()
 
-
-
-
-    const  viewDrinkHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      
+    const  viewDrinkHandler = (id: strOrUndefined) => {
+      history.push(`/cocktail/${id}`);
     }
 
     const drinksUI = drinkList.map(drink => {
         return(
-            <Carousel.Item key={drink.img} interval={3000}>
+            <Carousel.Item onClick={() => viewDrinkHandler(drink.id)} key={drink.id} interval={3000}>
                 <img
                     className="d-block w-100"
                     src={drink.img}
@@ -77,9 +74,8 @@ const Hero: React.FC<IHeroProps> = ({ drinkList, recommended }) => {
                     <Col className="recommended-desc" xs={6}>
                         <div>
                             <p>{recommended.description}</p>
-                            <h2>{recommended.name}</h2>
+                            <h2 onClick={() => viewDrinkHandler(recommended.id)}>{recommended.name}</h2>
                         </div>
-                        <button>go</button>
                         <section>
                             {ingredientsUI}
                         </section> 
@@ -95,7 +91,6 @@ const Hero: React.FC<IHeroProps> = ({ drinkList, recommended }) => {
                                 <span>Find More Cocktails</span>
                             </button>
                         </div>
-
                     </Col>
                 </Row>
             </Col>
