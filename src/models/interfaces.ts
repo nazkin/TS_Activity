@@ -8,3 +8,8 @@ export interface drinkList {
     ingredientAmounts?: Array<string>;
     instructions?: string;
   };
+
+// export interface cocktailIngredients {
+//   ingredient: string;
+//   amount: string;
+// }

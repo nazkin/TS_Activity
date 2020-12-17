@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Loader from 'react-loader-spinner';
 import axios from "axios";
 
 
@@ -8,11 +9,13 @@ import { destructureCocktailIngredients } from '../helpers';
 
 import Hero from "../components/HomeHero";
 import Template from "../components/Template";
+import LoadingSpinner from "../components/subcomponents/LoadingSpinner"
 
 export interface homeProps {};
 
 const Home: React.FC<homeProps> = (props) => {
-    
+
+    const [isLoading, setIsLoading] = useState(false);
     const [drinks, setDrinks] = useState<Array<interfaces.drinkList>>([{
       id:"",
       name: "",
@@ -31,6 +34,8 @@ const Home: React.FC<homeProps> = (props) => {
 
     //Fetching 10 random cockatails for the home page
     useEffect(() => {
+        setIsLoading(true);
+
         axios({
           method: "GET",
           url: urls.tenCocktailsUrl,
@@ -49,9 +54,13 @@ const Home: React.FC<homeProps> = (props) => {
               }
               return obj;
             });
+            setIsLoading(false);
             setDrinks(arr);
-            console.log(res);
-        }).catch(err => console.log(err));
+        }).catch(err =>{
+            setIsLoading(false);
+            //Error handling
+            console.log(err);
+        });
       }, [setDrinks]);
     
     //Fetching 1 random recipe
@@ -72,11 +81,15 @@ const Home: React.FC<homeProps> = (props) => {
       }).catch(err => console.log(err));
     },[setRecommend]);
 
-    let heroUi = recommend === undefined || drinks === undefined ? (<div/>) : (<Hero recommended={recommend} drinkList={drinks}/>)
-    
-    return (
+    let heroUi = (recommend === undefined || drinks === undefined) ?
+                   (<div/>) : (<Hero 
+                                  recommended={recommend} 
+                                  drinkList={drinks}
+                                />);
+    let loadingSpinner = <LoadingSpinner type="Puff" color="#541BD6" width={500} height={500}/> ;
+    return( 
         <Template>
-            {heroUi}
+            {isLoading ? loadingSpinner : heroUi}
         </Template>
     );
 }

@@ -1,9 +1,12 @@
 import React from "react";
 import { Carousel, Row, Col } from "react-bootstrap";
-import { useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom";
+
 import * as interfaces from "../models/interfaces";
 import "./comp_styles/homeHero.css";
 
+import IngredientsDisplay from "./subcomponents/IngredientsDisplay";
+import CustomButton from "../components/subcomponents/ButtonCustom";
 
 export interface IHeroProps {
     drinkList: Array<interfaces.drinkList>;
@@ -28,6 +31,7 @@ const Hero: React.FC<IHeroProps> = ({ drinkList, recommended }) => {
                 />
                 <Carousel.Caption className="carousel-text">
                    <h1>{drink.name}</h1>
+                   <h4>{drink.description}</h4>
                 </Carousel.Caption>
             </Carousel.Item>
         );
@@ -42,17 +46,10 @@ const Hero: React.FC<IHeroProps> = ({ drinkList, recommended }) => {
             if(recommended.ingredientAmounts === undefined){
                 infoAmt = "";
             }else{
-                infoAmt = ` - ${recommended.ingredientAmounts[index].trim()}`;
+                infoAmt = ` ${recommended.ingredientAmounts[index].trim()}`;
             }  
             return (
-                <div className="ingredient-list-text">
-                    <span>
-                        <h4>{infoIng}</h4>
-                    </span>
-                    <span>
-                        <h4>{infoAmt}</h4>
-                    </span> 
-                </div>
+                <IngredientsDisplay displayTypeLarge={false} ingredient={infoIng} amount={infoAmt} key={index}/>
             );
       
         });
@@ -64,12 +61,12 @@ const Hero: React.FC<IHeroProps> = ({ drinkList, recommended }) => {
                     <h1>Explore Our Featured Cocktails</h1>
                 </span>
             </Col>
-            <Col xs={6} className="mt-5 p-5">
-                <Carousel className="carousel-items">
+            <Col md={6} className="mt-5 p-5">
+                <Carousel controls={false} indicators={false} className="carousel-items">
                     {drinksUI}
                 </Carousel>
             </Col>
-            <Col xs={6} className="home-random-drink mt-5">
+            <Col md={6} className="home-random-drink mt-5">
                 <Row className="recommended-row">
                     <Col className="recommended-desc" xs={6}>
                         <div>
@@ -86,11 +83,7 @@ const Hero: React.FC<IHeroProps> = ({ drinkList, recommended }) => {
                 </Row>
                 <Row>
                     <Col xs={12} className="justify-content-center">
-                        <div className="cont">
-                            <button className="btn-pill">
-                                <span>Find More Cocktails</span>
-                            </button>
-                        </div>
+                        <CustomButton>Find More Cocktails</CustomButton>
                     </Col>
                 </Row>
             </Col>

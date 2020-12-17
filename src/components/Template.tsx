@@ -11,8 +11,9 @@ const Template: React.FC<ITemplateProps> = (props) => {
     return (
         <Container>
             <Header />
-            <footer>
                 {props.children}
+            <footer>
+                
                 <p>************************************************************************************</p>
             </footer>
         </Container>

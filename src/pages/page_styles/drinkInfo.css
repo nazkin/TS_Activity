@@ -38,20 +38,3 @@
 .drink-ingredients-col p {
     font-size: 14px;
 }
-.ing-div {
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    font-family: 'Varela Round', sans-serif;
-}
-.ing-div:nth-child(odd) {
-    background-color: rgba(255, 255, 255, 0.089);
-}
-.ing-div section {
-    padding: 4px;
-}
-.ing-div h4{
-    font-size: 22px;
-
-}

@@ -29,5 +29,6 @@ export const destructureCocktailIngredients = (drinkData:any): interfaces.drinkL
       ingredientAmounts: amountArr,
       instructions: drinkData.strInstructions,
     };
-    return obj
+    return obj;
 }
+

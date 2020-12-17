@@ -9,7 +9,8 @@ import * as interfaces from "../models/interfaces";
 import { destructureCocktailIngredients } from '../helpers';
 
 import Template from "../components/Template";
-
+import IngredientsDisplay from "../components/subcomponents/IngredientsDisplay";
+import LoadingSpinner from "../components/subcomponents/LoadingSpinner";
 
 type DrinkDetailParams = {
     id: string; 
@@ -20,7 +21,8 @@ type DrinkInfoProps = RouteComponentProps<DrinkDetailParams>;
 const DrinkInfo: React.FC<DrinkInfoProps> = (props) => {
     
     const currentDrinkId:string = props.match.params.id;
-    
+
+    const [isLoading, setIsLoading] = useState(false);
     const [drinkInfo, setDrinkInfo] = useState<interfaces.drinkList>({
         name: "",
         img: "",
@@ -29,8 +31,10 @@ const DrinkInfo: React.FC<DrinkInfoProps> = (props) => {
         ingredientAmounts: [],
         instructions: "",
     });
+    
 
     useEffect(() => {
+        setIsLoading(true);
         axios({
             method: "GET",
             url: `${apiRoutes.idLookup}`,
@@ -44,10 +48,14 @@ const DrinkInfo: React.FC<DrinkInfoProps> = (props) => {
             }
 
         }).then(({ data }) => {
-            const drinkObj = data.drinks[0];
-            const currentDrinkData = destructureCocktailIngredients(drinkObj);
+            const drinkObj:any = data.drinks[0];
+            const currentDrinkData:interfaces.drinkList = destructureCocktailIngredients(drinkObj);
             setDrinkInfo(currentDrinkData);
-        }).catch(err => console.log(err));
+            setIsLoading(false);
+        }).catch(err => {
+            setIsLoading(false);
+            console.log(err);
+        });
     },[currentDrinkId]);
 
     let drinkImgUi = drinkInfo.img ? <img className="drink-img" src={drinkInfo.img} alt="current drink" /> : <h1>Waiting on Image</h1>;
@@ -67,32 +75,30 @@ const DrinkInfo: React.FC<DrinkInfoProps> = (props) => {
                 infoAmt = `${drinkInfo.ingredientAmounts[index].trim()}`;
             }  
             return (
-                <div className="ing-div" key={`${ing}${index}`}>
-                    <section>
-                        <h4>{infoIng}</h4>
-                    </section>
-                    <section>
-                        <h4>{infoAmt}</h4>
-                    </section> 
-                </div>
+                <IngredientsDisplay displayTypeLarge={true} ingredient={infoIng} amount={infoAmt} key={index}/>
             );
         });
     }
 
     return (
         <Template>
-            <Row className="mx-2 d-flex flex-row justify-content-evenly">
-                {drinkTitleUi}
-                <Col sm={7}>
-                    {drinkImgUi}
-                </Col>
-                <Col className="drink-ingredients-col" sm={5}>
-                    <h1>Ingredients</h1>
-                    {ingredientsUi ? ingredientsUi : null}
-                    <h1>Instructions</h1>
-                    <p>{drinkInfo.instructions}</p>
-                </Col>
-            </Row> 
+            { !isLoading 
+                ? 
+                <Row className="mx-2 d-flex flex-row justify-content-evenly">
+                    {drinkTitleUi}
+                    <Col sm={7}>
+                        {drinkImgUi}
+                    </Col>
+                    <Col className="drink-ingredients-col" sm={5}>
+                        <h1>Ingredients</h1>
+                        {ingredientsUi ? ingredientsUi : null}
+                        <h1>Instructions</h1>
+                        <p>{drinkInfo.instructions}</p>
+                    </Col>
+                </Row> 
+                :
+                <LoadingSpinner type="Puff" color="#541BD6" width={500} height={500}/>
+            } 
         </Template>
     );
 }
