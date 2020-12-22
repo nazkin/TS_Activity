@@ -5,3 +5,6 @@ export const newAdditions:string = "https://the-cocktail-db.p.rapidapi.com/lates
 export const popularDrinks:string = "https://the-cocktail-db.p.rapidapi.com/popular.php";
 
 export const idLookup:string = "https://the-cocktail-db.p.rapidapi.com/lookup.php";
+export const listCategories:string = "https://the-cocktail-db.p.rapidapi.com/list.php";
+
+export  const filterByCategory:string = "https://the-cocktail-db.p.rapidapi.com/filter.php";

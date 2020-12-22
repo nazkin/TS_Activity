@@ -1,0 +1,20 @@
+.categoryFilter-title {
+    width:100%;
+    padding:10px;
+    text-align: center;
+    min-height: 50px;
+    background-color: snow;
+    box-shadow: 1px 1px 1px black;
+}
+
+.categoryFilter-title h1{
+    font-size: 30px;
+    color: darkblue;
+    font-weight: 300;
+}
+.category-cocktails-row {
+    height: 40rem;
+    display: flex;
+    flex-direction: row;
+    overflow-x: hidden;
+}

@@ -20,6 +20,9 @@ const Hero: React.FC<IHeroProps> = ({ drinkList, recommended }) => {
     const  viewDrinkHandler = (id: strOrUndefined) => {
       history.push(`/cocktail/${id}`);
     }
+    const viewCategoryPage = () => {
+        history.push(`/search/categories`);
+    }
 
     const drinksUI = drinkList.map(drink => {
         return(
@@ -83,7 +86,7 @@ const Hero: React.FC<IHeroProps> = ({ drinkList, recommended }) => {
                 </Row>
                 <Row>
                     <Col xs={12} className="justify-content-center">
-                        <CustomButton>Find More Cocktails</CustomButton>
+                        <CustomButton onClick={() => {viewCategoryPage()}}>Find More Cocktails</CustomButton>
                     </Col>
                 </Row>
             </Col>

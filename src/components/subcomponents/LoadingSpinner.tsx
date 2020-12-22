@@ -20,7 +20,7 @@ const LoadingSpinner: React.FC<ILoadingSpinnerProps> = ({
     timeout=3000,
 }) => {
     return (
-        <div className="d-flex flex-row justify-content-center">
+        <div className="d-flex flex-row justify-content-center my-5">
           <Loader 
             type={type}
             color={color}
