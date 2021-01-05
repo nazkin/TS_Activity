@@ -32,3 +32,7 @@ export const destructureCocktailIngredients = (
   };
   return obj;
 };
+
+export const destructureListOfCocktails = (drinksListData: any[]) => {
+  return drinksListData.map((drink: any) => destructureCocktailIngredients(drink));
+}

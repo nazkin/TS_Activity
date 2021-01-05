@@ -18,8 +18,10 @@ export const fetchTenDrinks = createModel<RootModel>()({
       state: TenDrinksListState,
       payload: Array<allDrinkData>
     ): TenDrinksListState => {
-      state.drinksData = [...payload];
-      return state;
+        return {
+          ...state,
+          drinksData: payload
+        }
     },
   },
   effects: (dispatch: Dispatch) => {
