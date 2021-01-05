@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {TenDrinksState} from '../store/types';
+import {Dispatch, iRootState} from '../store/store';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IFilterPageProps {}
 
@@ -12,9 +12,8 @@ const FilterPage: React.FC<IFilterPageProps> = props => {
   );
 };
 
-const mapState = state => ({
-  tenDrinks: state.fetchTenDrinks,
+const mapState = (state: iRootState) => ({
+  drinksData: state.fetchTenDrinks,
 });
-const mapDispatch = () => ({});
 
-export default connect(mapState, mapDispatch)(FilterPage);
+export default connect(mapState)(FilterPage);

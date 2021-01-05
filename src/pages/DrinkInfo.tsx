@@ -46,6 +46,7 @@ const DrinkInfo: React.FC<DrinkInfoProps> = props => {
     })
       .then(({data}) => {
         const drinkObj: any = data.drinks[0];
+        console.log(data);
         const currentDrinkData: interfaces.drinkList = destructureCocktailIngredients(
           drinkObj
         );
